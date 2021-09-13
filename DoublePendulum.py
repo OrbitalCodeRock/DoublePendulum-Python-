@@ -85,6 +85,7 @@ def update_double_pendulum_acceleration(initial_pendulum, final_pendulum):
 
 class App:
     def __init__(self):
+        pygame.init();
         self._running = True
         self._display_surf = None
         self.size = self.weight, self.height = 640, 800
@@ -92,7 +93,6 @@ class App:
         self.loop_iterations = 0
         self.add_force_event = pygame.USEREVENT + 1
         pygame.time.set_timer(self.add_force_event, 1000)
-
 
     def on_init(self):
         pygame.init()
