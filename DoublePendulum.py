@@ -2,6 +2,9 @@ import pygame
 from pygame.locals import *
 import math
 
+# Yes, I am aware that the force of gravity on earth is not 1.5 meters per second^2.
+# Because this is a constant, it doesnt really have a major impact on the end result.
+# Feel free to mess with this number.
 g_constant = 1.5
 
 # // TODO  Make trail system more efficient
@@ -13,7 +16,7 @@ class Pendulum:
     # Mass is the mass of the pendulum
     # Acceleration is the second derivative of theta
     # Velocity is the first derivative of theta
-    # The endpoint of a pendulum is it's bottom circle.
+    # The endpoint of a pendulum is the weighted ball at its bottom.
     # Trail_points are a collection of past endpoints(explained more later)
     def __init__(self, origin, theta, length, mass, acceleration = 0.1, velocity = 0.1):
         self.origin = origin
@@ -28,13 +31,13 @@ class Pendulum:
     def update_forces(self):
         # Because computers are fast, they update multiple times every second.
         # To adjust for this we scale down the acceleration and velocity numbers.
-        # The speed at which a while loop updates may vary on your computer,
+        # The speed at which a while loop updates may vary based on your computer,
         # so feel free to mess around with these numbers.
         self.velocity += self.acceleration/100
         self.theta += self.velocity/100
 
     # Currently the trail system is inefficient. This is because we redraw everything on the screen every loop.
-    # Because of this, the current trail system adds to a list of past endpoints with every loop.
+    # The current trail system adds to a list of past endpoints with every loop.
     # Trail_length defines the max number of endpoints(or trail_points in this case) that will be redrawn.
     # When the number of trail_points exceeds this number, the first endpoint in the list is deleted.
     def draw(self, surface, line_color = [0, 0, 0], line_width = 5, dot_color = [0, 0, 0], radius = 10, trail = True,
